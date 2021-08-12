@@ -14,7 +14,7 @@ class NewsController extends Controller
     $this->result = $result;
   //  print_r($result);
     return view ('news.index', [
-      'news' =>$this->result
+      'newsList' =>$this->result
     ]);
   }
 

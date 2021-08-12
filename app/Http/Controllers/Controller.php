@@ -84,7 +84,7 @@ class Controller extends BaseController
 
         public function test()
         {
-      //    $result = array_merge_recursive($newsList, $newsList1);
+      $result = array_merge($this->newsList, $this->newsList1);
         //  $this->$result = $result;
         }
 

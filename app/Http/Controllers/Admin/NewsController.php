@@ -14,7 +14,10 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return response("Список новостей");
+    //  $result = array_merge($this->newsList, $this->newsList1);
+        return view('admin.news.index', [
+          'newsList'=> $this->newsList
+        ]);
     }
 
     /**
@@ -24,7 +27,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.news.create');
     }
 
     /**
