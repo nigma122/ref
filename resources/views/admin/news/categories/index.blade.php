@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 @section('content')
 <h1>Категории</h1>
-<a href="{{route('categories.create')}}">Добавить Новую</a>
+<a href="{{route('categories.create')}}">Добавить категорию</a>
 @endsection

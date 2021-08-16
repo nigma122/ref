@@ -43,15 +43,15 @@
       </li>
 
       <li id="dash_categories">
-        <div id="dash_categories_header" class="collapsible-header waves-effect"><b>Каталог</b></div>
+        <div id="dash_categories_header" class="collapsible-header waves-effect "><b>Каталог</b></div>
         <div id="dash_categories_body" class="collapsible-body">
           <ul>
             <li id="categories_category">
-              <a class="waves-effect" style="text-decoration: none;" href="{{route('admin.categories.index')}}">Категории</a>
+              <a class="waves-effect @if(request()->routeIs('admin.news.*')) active @endif" style="text-decoration: none;" href="{{route('admin.categories.index')}}">Категории</a>
             </li>
 
             <li id="categories_sub_category">
-              <a class="waves-effect" style="text-decoration: none;" href="{{route('admin.news.index')}}">Новости</a>
+              <a class="waves-effect @if(request()->routeIs('admin.news.*')) active @endif" style="text-decoration: none;" href="{{route('admin.news.index')}}">Новости</a>
             </li>
           </ul>
         </div>

@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-<h1>Категории</h1>
+<h1>Новости</h1>
 <a href="{{route('admin.news.index')}}">Добавить Новость</a>
 <div class="row">
-  <form method="post">
+  <form method="post" action="{{route('admin.news.store')}}">
+    @csrf
     <div class="form-group">
       <label for="title">Заголовок</label>
       <input type="text" class="form-control" name="title" id="title" value="">
