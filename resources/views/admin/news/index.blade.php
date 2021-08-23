@@ -8,7 +8,8 @@
         <thead>
           <tr>
             <th>Заголовок</th>
-            <th>Текст</th>
+            <th>Статус</th>
+            <th>Автор</th>
             <th>Дата добовления</th>
             <th>Управление</th>
           </tr>
@@ -16,8 +17,9 @@
         <tbody>
           @forelse($newsList as $news)
           <tr>
-            <td>{{$news['title']}}</td>
-            <td>{{$news['description']}}</td>
+            <td>{{$news->title}}</td>
+            <td>{{$news->status}}</td>
+            <td>{{$news->author}}</td>
             <td>{{now()->format('d-m-Y')}}</td>
             <td><a href=""style="font-size:12px; color:red;">удалить </a><a href="" style="font-size:12px;">ред</a></td>
           </tr>

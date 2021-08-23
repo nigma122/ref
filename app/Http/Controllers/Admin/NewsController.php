@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\News;
 
 class NewsController extends Controller
 {
@@ -14,9 +15,10 @@ class NewsController extends Controller
      */
     public function index()
     {
-    //  $result = array_merge($this->newsList, $this->newsList1);
+    $model = new News();
+    $newsList = $model->getNews();
         return view('admin.news.index', [
-          'newsList'=> $this->newsList
+          'newsList'=> $newsList
         ]);
     }
 

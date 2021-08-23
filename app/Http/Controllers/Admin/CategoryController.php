@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
+
 
 class CategoryController extends Controller
 {
@@ -14,7 +16,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.news.categories.index');
+      $model = new Category();
+      $categories = $model->getCategories();
+
+        return view('admin.news.categories.index', [
+          'categories' =>$categories
+        ]);
     }
 
     /**

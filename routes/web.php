@@ -40,8 +40,3 @@ Route::group(['prefix' =>'news'], function (){
     ->name('news.show');
 
 });
-
-Route::get('/feedback', [FeedbackController::class 'index.feedback'])
-->name('feedback.index');
-Route::post('/feedback', [FeedbackController::class 'send'])
-->name('feedback.send');
