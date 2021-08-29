@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\News;
+use App\Models\Category;
 
 class NewsController extends Controller
 {
@@ -15,8 +16,10 @@ class NewsController extends Controller
      */
     public function index()
     {
-    $model = new News();
-    $newsList = $model->getNews();
+
+    $newsList = News::with('category')->paginate(
+      config('paginate.admin.categories')
+    );
         return view('admin.news.index', [
           'newsList'=> $newsList
         ]);
@@ -29,7 +32,10 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+      $categories = Category::all();
+        return view('admin.news.create', [
+          'categories' => $categories
+        ]);
     }
 
     /**
@@ -40,7 +46,19 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->title);
+        $request->validate([
+          'title' => ['required', 'string']
+        ]);
+
+        $data = $request->only(['category_id', 'title', 'description', 'author', 'status']);
+        $news = News::create($data);
+
+        if($news)
+        {
+          return redirect()->route('admin.news.index')->with('success', 'Новость успешно добавлена');
+        }
+
+        return brack()->withInput()->with('error', 'Неудалось добавить новость');
     }
 
     /**
@@ -49,7 +67,7 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(News $news)
     {
         //
     }
@@ -57,24 +75,40 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(News $news)
     {
-        //
+
+        $categories = Category::all();
+        return view('admin.news.edit', [
+          'news' => $news,
+          'categories' => $categories
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news)
     {
-        //
+      $request->validate([
+        'title' => ['required', 'string']
+      ]);
+
+      $data = $request->only(['category_id', 'title', 'description', 'author', 'status']);
+      $news = $news->fill($data)->save();
+
+      if($news)
+      {
+      return redirect()->route('admin.news.index')->with('success', 'Новость успешно сохранена');
+      }
+      return brack()->withInput()->with('error', 'Неудалось сохранить новость');
     }
 
     /**
@@ -85,6 +119,10 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+
+      $news = News::find($id);
+      $news->delete();
+      return redirect()->route('admin.news.index')->with('success', 'Новость успешно удалена');
     }
 }

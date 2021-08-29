@@ -2,6 +2,8 @@
 @section('content')
 <h1>Категории</h1>
 <a href="{{route('admin.categories.create')}}">Добавить категорию</a>
+<div class="row">
+@include('inc.message')
 
 <div class="table-response">
 <table class="table table-bordered">
@@ -30,7 +32,8 @@
     @endforelse
   </tbody>
 </table>
+{{ $categories->links() }}
 </div>
 
-
+</div>
 @endsection

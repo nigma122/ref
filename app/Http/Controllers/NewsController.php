@@ -3,34 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\News;
 
 class NewsController extends Controller
 {
   public function index()
   {
-    $this->newsList;
-    $this->newsList1;
-    $result = array_merge($this->newsList, $this->newsList1);
-    $this->result = $result;
-  //  print_r($result);
+
+   $news = News::all();
     return view ('news.index', [
-      'newsList' =>$this->result
+      'newsList' =>$news
     ]);
   }
 
-  public function show(int $id)
+  public function show(News $news)
   {
-    $newsList = [];
-    foreach ($this->newsList as $news) {
-      if ($news['id'] === $id) {
-        $newsList[] = $news;
-      }
-    }
 
-    if(empty($newsList))
-    {
-      abort(404);
-    }
 
     return view ('news.show', [
       'id' => $id
@@ -40,7 +28,7 @@ class NewsController extends Controller
   public function category()
   {
     return view ('news.category', [
-      'news' =>$this->newsList
+      'news' =>$news
     ]);
   }
 

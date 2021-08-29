@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -35,8 +36,11 @@ Route::group(['prefix' =>'news'], function (){
     ->name('news');
     Route::get('/category', [NewsController::class, 'category'])
     ->name('news.category');
-    Route::get('/show/{id}', [NewsController::class, 'show'])
-    ->where('id', '\d+')
+    Route::get('/show/{news}', [NewsController::class, 'show'])
+    ->where('news', '\d+')
     ->name('news.show');
-
 });
+
+
+Route::get('/delete/{id}', [NewsController::class, 'delete'])
+->name('delete');
