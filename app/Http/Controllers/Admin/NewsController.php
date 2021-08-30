@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\News;
+use App\Http\Requests\UpdateNewsRequest;
 use App\Models\Category;
 
 class NewsController extends Controller
@@ -44,21 +45,18 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreNewsRequest $request)
     {
-        $request->validate([
-          'title' => ['required', 'string']
-        ]);
 
-        $data = $request->only(['category_id', 'title', 'description', 'author', 'status']);
-        $news = News::create($data);
+
+        $news = News::create($request->validated());
 
         if($news)
         {
-          return redirect()->route('admin.news.index')->with('success', 'Новость успешно добавлена');
+          return redirect()->route('admin.news.index')->with('success', __('message.admin.news.create.success'));
         }
 
-        return brack()->withInput()->with('error', 'Неудалось добавить новость');
+        return brack()->withInput()->with('error', __('message.admin.news.create.fail'));
     }
 
     /**
@@ -91,24 +89,21 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateNewsRequest  $request
      * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(UpdateNewsRequest $request, News $news)
     {
-      $request->validate([
-        'title' => ['required', 'string']
-      ]);
 
-      $data = $request->only(['category_id', 'title', 'description', 'author', 'status']);
+      $data = $request->validated();
       $news = $news->fill($data)->save();
 
       if($news)
       {
-      return redirect()->route('admin.news.index')->with('success', 'Новость успешно сохранена');
+      return redirect()->route('admin.news.index')->with('success',  __('message.admin.news.update.success'));
       }
-      return brack()->withInput()->with('error', 'Неудалось сохранить новость');
+      return brack()->withInput()->with('error', __('message.admin.news.update.file'));
     }
 
     /**
