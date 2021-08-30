@@ -44,3 +44,7 @@ Route::group(['prefix' =>'news'], function (){
 
 Route::get('/delete/{id}', [NewsController::class, 'delete'])
 ->name('delete');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
